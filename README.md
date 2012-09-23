@@ -22,6 +22,13 @@ Example:
                 fields.BigTextField("description", "Description")
             ]
 
+            # optional
+            # templates, '/templates/admin/[model]/' path
+        	self.c = "" # new item template
+            self.r = "" # items list template
+            self.u = "" # edit item template
+            self.d = "" # delete item template
+
 
 Fields
 ======
