@@ -1,0 +1,21 @@
+{% extends "admin_panel.html" %}
+
+{% block content %}
+    <div class="container">
+        <h1>
+        	{{action}}
+        	<small>
+        		::
+        		<a href="{{ url_for('admin_crud', model=model, action='r') }}">{{model}}</a>
+        		::
+        		<a href="{{ url_for('admin_panel') }}">Admin panel</a>
+			</small>
+        </h1>
+
+        {% if msg %}
+            <p class="alert alert-info">{{ msg }}</p>
+        {% endif %}
+
+        {% block main %}{% endblock %}
+    </div>
+{% endblock %}

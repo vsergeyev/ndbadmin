@@ -1,0 +1,12 @@
+{% extends "admin/base.html" %}
+
+{% block main %}
+	<p class="alert alert-error">
+		You about to delete '{{item}}'?
+	</p>
+	<form method="post" action="">
+	    <input type="hidden" name="dummy" />
+	    <input type="submit" value="Confirm Delete" class="btn btn-danger" />
+	    <a class="btn" href="{{ url_for('admin_crud', model=model, action='r') }}">Cancel</a>
+	</form>
+{% endblock %}

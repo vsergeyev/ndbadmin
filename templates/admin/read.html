@@ -1,0 +1,21 @@
+{% extends "admin/base.html" %}
+
+{% block main %}
+    <p>
+        <a class="btn" href="{{ url_for('admin_crud', model=model, action='c') }}">Add {{model}}</a>
+    </p>
+
+    <table class="table table-striped">
+    {% for item in items %}
+        <tr>
+            <td>{{item|safe}}</td>
+            <td width=50>
+                <a class="btn" href="{{ url_for('admin_crud', model=model, action='u') }}?id={{item.key.id()}}">Edit</a>
+            </td>
+            <td width=50>
+                <a class="btn" href="{{ url_for('admin_crud', model=model, action='d') }}?id={{item.key.id()}}">Delete</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "admin/base.html" %}
+
+{% block main %}
+	<form method="post" action="">
+	    <fieldset>
+	        {% for field in fields %}
+                <p>
+                    {{ field.render()|safe }}
+                </p>
+            {% endfor %}
+	    </fieldset>
+	    <input type="submit" value="Save" class="btn btn-primary" />
+	</form>
+{% endblock %}
