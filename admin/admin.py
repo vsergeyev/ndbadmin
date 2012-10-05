@@ -100,6 +100,8 @@ class CrudHandler(BaseHandler):
         # list
         if action == "r":
             items = m.query()
+            if hasattr(m.Meta(), "order_by"):
+                items = items.order(m.Meta().order_by)
 
         content = {
                    "model": model,

@@ -30,6 +30,7 @@ class Item(ndb.Model):
                 fields.TextField("name", "Name", required=True),
                 fields.BigTextField("description", "Description")
             ]
+            self.order_by = Item.name
 
 
 

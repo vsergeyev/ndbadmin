@@ -29,6 +29,9 @@ Example:
             self.u = "" # edit item template
             self.d = "" # delete item template
 
+            # ordering
+            order_by = ModelName.field_name
+
 
 Fields
 ======
@@ -56,6 +59,20 @@ Fields options:
  * required - false by default
  * query - in choise and key fields indicate a list of values/options
 
+
+Ordering items
+==============
+
+To sort items in list add to Meta `order_by` field with the name of model's field to sort by.
+
+Example:
+
+    class Item(ndb.Model):
+        name = ndb.StringProperty()
+
+        class Meta():
+            def __init__(self):
+                self.order_by = Item.name
 
 TODO
 ====
