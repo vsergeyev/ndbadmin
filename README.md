@@ -1,7 +1,9 @@
 Admin panel for ndb.Model
 =========================
 
-This is live application to demonstrate admin UI.
+http://ndbadmin-live.appspot.com/
+
+Included live application to demonstrate admin UI.
 I developed this admin panel for my own usage.
 
 In this app Admin panel use twitter bootstrap CSS style.
