@@ -1,9 +1,15 @@
 {% extends "admin/base.html" %}
 
 {% block main %}
-    <p>
+    <div class="navbar">
+        <div class="pull-right bottom">
+            {% if items %}
+                {{items_count}} items{% if items_count > per_page %}, {{per_page}} per page{% endif %}
+            {% endif %}
+        </div>
+
         <a class="btn" href="{{ url_for('admin_crud', model=model, action='c') }}">Add {{model}}</a>
-    </p>
+    </div>
 
     <table class="table table-striped">
     {% for item in items %}
@@ -18,4 +24,8 @@
         </tr>
     {% endfor %}
     </table>
+
+    {% if cursor %}
+        <a class="btn" href="?cursor={{cursor}}">more..</a>
+    {% endif %}
 {% endblock %}

@@ -1,8 +1,10 @@
 import os
 import webapp2
+from google.appengine.ext import ndb
 from webapp2_extras import jinja2
 
 from models_admin import *
+import settings
 
 
 actions_map = {
@@ -77,6 +79,10 @@ class CrudHandler(BaseHandler):
     def get(self, model, action):
         item = None
         items = None
+        items_count = 0
+        cursor = self.request.get('cursor')
+        next_c = None
+        per_page = getattr(settings, "PER_PAGE", 3)
         item_id = self.request.GET.get("id", None)
         msg = self.request.GET.get("msg", None)
         m = eval(model)
@@ -103,12 +109,26 @@ class CrudHandler(BaseHandler):
             if hasattr(m.Meta(), "order_by"):
                 items = items.order(m.Meta().order_by)
 
+            items_count = items.count()
+
+            # -- PAGINATE RESULTS --
+            cursor = ndb.Cursor(urlsafe=cursor)
+            items, next_curs, more = items.fetch_page(per_page,
+                start_cursor=cursor)
+            if more:
+                next_c = next_curs.urlsafe()
+            else:
+                next_c = None
+
         content = {
                    "model": model,
                    "action": actions_map[action],
                    "fields": fields,
                    "item": item,
                    "items": items,
+                   "items_count": items_count,
+                   "cursor": next_c,
+                   "per_page": per_page,
                    "msg": msg
                    }
         self.render_template(path + template, **content)

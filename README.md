@@ -50,6 +50,8 @@ Now CRUD has next types of fields available to use:
  * IntegerField - input type number (with spinner in most browsers)
  * MoneyField - input type text, styled with twitter bootstrap CSS
  * DateField - input type date
+ * FloatField - input type text for displaying numbers with decimal point nicely
+ * TextFileField - input type file
 
 Fields options:
 
