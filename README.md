@@ -76,6 +76,14 @@ Example:
             def __init__(self):
                 self.order_by = Item.name
 
+
+Pagination
+==========
+
+By default items in list paginated by 10 items per page. To change this,
+add `PER_PAGE` variable in settings file.
+
+
 TODO
 ====
 

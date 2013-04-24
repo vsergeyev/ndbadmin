@@ -82,7 +82,7 @@ class CrudHandler(BaseHandler):
         items_count = 0
         cursor = self.request.get('cursor')
         next_c = None
-        per_page = getattr(settings, "PER_PAGE", 3)
+        per_page = getattr(settings, "PER_PAGE", 10)
         item_id = self.request.GET.get("id", None)
         msg = self.request.GET.get("msg", None)
         m = eval(model)
