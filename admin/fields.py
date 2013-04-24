@@ -223,6 +223,33 @@ class IntegerField(Field):
         if not val or val[0]=="":
             return 0
         return int(val[0])
+
+
+class FloatField(Field):
+    """
+    Field for displaying float value
+    """
+    def __init__(self, field, label, initial="", required=False, min="", max=""):
+        super(FloatField, self).__init__(field, label, initial, required)
+        self.min = min
+        self.max = max
+
+    def render(self):
+        return '''<label>%s</label>
+        <input class="span2" type="text" name="%s" id="id_%s" value="%f" %s min="%s" max="%s" />''' % (
+            self.label,
+            self.field,
+            self.field,
+            self.initial or 0.0,
+            "required" if self.required else "",
+            self.min,
+            self.max
+        )
+
+    def parse(self, val):
+        if not val or val[0]=="":
+            return 0.0
+        return float(val[0])
     
 
 class DateField(Field):
