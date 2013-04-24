@@ -243,3 +243,23 @@ class DateField(Field):
         if not val or val[0]=="":
             return None
         return datetime.datetime.strptime(val[0], "%Y-%m-%d")
+
+
+class TextFileField(Field):
+    """
+    Input type "file"
+    """
+    def render(self):
+        return '''
+        <label>%s</label>
+        <input type="file" name="%s" id="id_%s" %s />''' % (
+            self.label,
+            self.field,
+            self.field,
+            "required" if self.required else ""
+        )
+
+    def parse(self, val):
+        if not val or val[0]=="":
+            return ""
+        return unicode(val[0].file.read(), "Latin-1")
