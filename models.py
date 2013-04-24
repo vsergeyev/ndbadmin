@@ -46,7 +46,10 @@ class Order(ndb.Model):
     price = ndb.FloatProperty()
 
     def __unicode__(self):
-        return "%s ordered %s" % (self.date_added.strftime("%d %M %Y"), self.item.get())
+        return "%s ordered %s" % (self.customer, self.item.get())
+
+    def __str__(self):
+        return self.__unicode__()
 
     class Meta():
         def __init__(self):
