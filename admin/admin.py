@@ -85,6 +85,12 @@ class CrudHandler(BaseHandler):
         per_page = getattr(settings, "PER_PAGE", 10)
         item_id = self.request.GET.get("id", None)
         msg = self.request.GET.get("msg", None)
+
+        if not model in MODELS:
+            raise Exception(
+                "Model `%s` not registered in `models_admin.py`" % model
+            )
+
         m = eval(model)
 
         # model template for given action
@@ -139,8 +145,14 @@ class CrudHandler(BaseHandler):
         item = None
         item_id = self.request.GET.get("id", None)
         data = self.request.POST
-        m = eval(model)
         msg = ""
+
+        if not model in MODELS:
+            raise Exception(
+                "Model `%s` not registered in `models_admin.py`" % model
+            )
+
+        m = eval(model)
 
         # item: Delete or Update
         if item_id:
