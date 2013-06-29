@@ -16,6 +16,7 @@ class Item(ndb.Model):
     """
     name = ndb.StringProperty()
     description = ndb.TextProperty()
+    image = ndb.BlobProperty()
 
     def __unicode__(self):
         return self.name
@@ -28,7 +29,8 @@ class Item(ndb.Model):
         def __init__(self):
             self.fields = [
                 fields.TextField("name", "Name", required=True),
-                fields.BigTextField("description", "Description")
+                fields.BigTextField("description", "Description"),
+                fields.FileField("image", "Image")
             ]
             self.order_by = Item.name
 

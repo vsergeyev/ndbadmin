@@ -272,9 +272,10 @@ class DateField(Field):
         return datetime.datetime.strptime(val[0], "%Y-%m-%d")
 
 
-class TextFileField(Field):
+class FileField(Field):
     """
-    Input type "file"
+    Input type "file".
+    Returns file content without conversion.
     """
     def render(self):
         return '''
@@ -286,6 +287,16 @@ class TextFileField(Field):
             "required" if self.required else ""
         )
 
+    def parse(self, val):
+        if not val or val[0]=="":
+            return ""
+        return val[0].file.read()
+
+
+class TextFileField(FileField):
+    """
+    Input type "file".
+    """
     def parse(self, val):
         if not val or val[0]=="":
             return ""
