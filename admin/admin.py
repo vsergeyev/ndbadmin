@@ -107,7 +107,7 @@ class CrudHandler(BaseHandler):
             item = m.get_by_id(int(item_id))
             if action == "u":
                 for f in fields:
-                    f.initial = getattr(item, f.field)
+                    f.initial = nested_getattr(item, f.field)
 
         # list
         if action == "r":
@@ -164,7 +164,7 @@ class CrudHandler(BaseHandler):
             elif action == "u":
                 fields = m.Meta().fields
                 for f in fields:
-                    setattr(item, f.field, f.parse(data.getall(f.field)))
+                    nested_setattr(item, f.field, f.parse(data.getall(f.field)))
                 item.put()
                 msg = "%s '%s' saved" % (model, item)
         # Create
@@ -172,9 +172,33 @@ class CrudHandler(BaseHandler):
             fields = m.Meta().fields
             item = m()
             for f in fields:
-                setattr(item, f.field, f.parse(data.getall(f.field)))
+                nested_setattr(item, f.field, f.parse(data.getall(f.field)))
             item.put()
             msg = "%s '%s' added" % (model, item)
 
         self.redirect(self.uri_for('admin_crud', model=model, action="r") \
                       + "?msg=" + msg)
+
+
+def nested_getattr(obj, name):
+    """ Same as getattr but can handle nested name, i.e. objectA.objectB.objectC. """
+    return reduce(lambda o, n: getattr(o,n), name.split('.'), obj)
+
+
+def nested_setattr(obj, name, value):
+    """ Same as setattr but can handle nested name, i.e. objectA.objectB.objectC. """
+    nested_names = name.split('.')
+    for n in nested_names[:-1]:
+        new_obj = getattr(obj, n)
+
+        # StructuredProperty is not created yet and holds None
+        if new_obj is None:
+            struct_obj = obj._properties[n]._modelclass()
+            setattr(obj, n, struct_obj)
+            obj = struct_obj
+        else:
+            obj = new_obj
+            
+    setattr(obj, nested_names[-1], value)
+    
+        

@@ -35,7 +35,6 @@ class Item(ndb.Model):
             self.order_by = Item.name
 
 
-
 class Order(ndb.Model):
     """
     More complex mdoel
@@ -46,6 +45,8 @@ class Order(ndb.Model):
     customer = ndb.StringProperty()
     memo = ndb.TextProperty()
     price = ndb.FloatProperty()
+    item_struct = ndb.StructuredProperty(Item)
+    
 
     def __unicode__(self):
         return "%s ordered %s" % (self.customer, self.item.get())
@@ -62,5 +63,8 @@ class Order(ndb.Model):
                 fields.CheckboxField("is_payed", "Payed"),
                 fields.TextField("customer", "Customer", required=True),
                 fields.BigTextField("memo", "Memo"),
-                fields.FloatField("price", "Price")
+                fields.FloatField("price", "Price"),
+                fields.TextField("item_struct.name", "Item Name", required=True),
+                fields.BigTextField("item_struct.description", "Item Description"),
+                fields.FileField("item_struct.image", "Item Image")
             ]
